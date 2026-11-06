@@ -1,0 +1,33 @@
+{
+  "name": "online-bidding-api",
+  "version": "1.0.0",
+  "description": "A REST API for an Online Bidding System ",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --env-file=.env --watch src/server.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "dotenv": "^18.0.9",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "prisma": "^7.3.0"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "express-validator": "^7.3.2",
+    "js-yaml": "^4.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.12.1",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
