@@ -11,7 +11,7 @@ const generateToken = (user) => {
     { expiresIn: '24h' }
   );
 };
-// create a new user and return the user object along with a JWT token
+// create a new user and return the user object 
 export const registerUser = async ({ email, password, name }) => {
   // Check if email is already taken
   const existingUser = await userRepository.findByEmail(email);
@@ -31,7 +31,14 @@ export const registerUser = async ({ email, password, name }) => {
   });
 
   const token = generateToken(newUser);
-  return { user: newUser, token };
+const userWithoutPassword = {
+  id: newUser.id,
+  name: newUser.name,
+  email: newUser.email,
+  role: newUser.role,
+}
+return  userWithoutPassword;
+ 
 };
 // login user and return the user object along with a JWT token
 export const loginUser = async ({ email, password }) => {
