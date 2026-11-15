@@ -1,13 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import authRoutes from './routes/auth.routes.js';
+
+// for testing purposes, we can import the auth middleware here
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
+// mount the auth routes under /api/auth
+app.use('/api/auth', authRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -32,3 +38,4 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 export default app;
+
