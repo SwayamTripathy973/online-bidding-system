@@ -6,7 +6,7 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
+// Using enums so invalid status strings don't sneak in
 enum Role {
   USER
   ADMIN
@@ -22,16 +22,18 @@ enum BidStatus {
   ACCEPTED
   REJECTED
 }
+// Define models
 
 model User {
   id        Int         @id @default(autoincrement())
-  name      String
   email     String      @unique
   password  String
+  name      String
   role      Role        @default(USER)
+
   listings  Listing[]
   bids      Bid[]
-  watchlist Watchlist[]
+  watchLists Watchlist[]
 }
 
 model Category {
@@ -43,11 +45,11 @@ model Category {
 model Listing {
   id            Int           @id @default(autoincrement())
   title         String
-  description   String
-  startingPrice Float
+  startingPrice Decimal
   status        ListingStatus @default(OPEN)
   sellerId      Int
   categoryId    Int
+  createdAt     DateTime    @default(now())   
 
   seller        User          @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   category      Category      @relation(fields: [categoryId], references: [id])
@@ -57,19 +59,20 @@ model Listing {
 
 model Bid {
   id        Int       @id @default(autoincrement())
-  amount    Float
+  amount    Decimal
   status    BidStatus @default(PENDING)
   listingId Int
   bidderId  Int
+  createdAt DateTime  @default(now()) 
 
   listing   Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
   bidder    User      @relation(fields: [bidderId], references: [id], onDelete: Cascade)
 }
 
 model Watchlist {
-  id        Int     @id @default(autoincrement())
   userId    Int
   listingId Int
+
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 
