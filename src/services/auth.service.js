@@ -16,7 +16,7 @@ export const registerUser = async ({ email, password, name }) => {
   // Check if email is already taken
   const existingUser = await userRepository.findByEmail(email);
   if (existingUser) {
-    throw new AppError('A user with this email already exists.', 403);
+    throw new AppError('A user with this email already exists.', 409);
   }
 
   // Hash the plain-text password
