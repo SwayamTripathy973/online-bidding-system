@@ -10,13 +10,18 @@ export const authenticate = (req, res, next) => {
     return next(new AppError('Access denied. No token provided.', 401));
   }
 
-  const token = authHeader.split(' ');
+  //const token = authHeader.split(' ');
+  const token = authHeader.slice(7).trim(); // Remove 'Bearer ' prefix
+  if (!token) {
+  return next(new AppError('Authentication required.', 401));
+}
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
-  } catch {
+  } catch (error) {
+    //console.log('JWT Verify Error:', error.message);
     return next(new AppError('Invalid or expired token.', 401));
   }
 };
